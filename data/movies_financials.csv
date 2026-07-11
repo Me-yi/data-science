@@ -1,0 +1,11 @@
+index,id,title,popularity,release_date,budget,revenue
+0,257,Oliver Twist,20.416,2005-09-23,5.000e+07,4.209e+07
+1,14290,Better Luck Tomorrow,3.877,2002-01-12,NaN,NaN
+2,38365,Grown Ups,38.864,2010-06-24,8.000e+07,2.714e+08
+3,9672,Infamous,3.681,2006-11-16,1.300e+07,1.151e+06
+4,12819,Alpha and Omega,12.301,2010-09-17,2.000e+07,3.930e+07
+5,3089,Red River,5.345,1948-08-26,3.000e+06,9.012e+06
+6,11934,The Hudsucker Proxy,14.189,1994-03-11,NaN,NaN
+7,13807,Exiled,8.486,2006-09-06,NaN,NaN
+8,73873,Albert Nobbs,7.802,2011-12-21,8.000e+06,5.635e+06
+9,11622,Blast from the Past,8.737,1999-02-12,3.500e+07,4.026e+07
