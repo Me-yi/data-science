@@ -26,3 +26,15 @@ Use fickling's CLI to safety-check pickle files:
 ```sh
 uv run fickling --check-safety -p <Pickle file/>
 ```
+
+## Scripts
+
+Utility scripts to help with data management
+
+### `convert_pickle.py`
+
+```sh
+uv run scripts/convert_pickle.py <Pickle File/>
+```
+
+Basic script to converts DataFrame `.p` files to `.csv` equivalent.
