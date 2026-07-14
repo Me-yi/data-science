@@ -4,7 +4,7 @@ import re
 
 import pandas as pd
 
-def get_csv_filepath(filepath:str):
+def create_csv_filepath(filepath:str):
     filepath_without_ext = os.path.splitext(filepath)[0]
     return filepath_without_ext + ".csv"
 
@@ -12,7 +12,7 @@ def remove_list_braces_quotes(list_str:str):
     return re.sub(r"[\[\]\']", "", list_str)    
 
 def convert_pickle_to_csv(filepath:str):
-    csv_filepath= get_csv_filepath(filepath)
+    csv_filepath= create_csv_filepath(filepath)
     pd.read_pickle(filepath).to_csv(csv_filepath, index=False)
 
 def print_conversion_message(created_files: list[str],failed_created_files:list[str]):
@@ -38,13 +38,17 @@ def print_conversion_message(created_files: list[str],failed_created_files:list[
         message += f"\033[1mFailed Files\033[0m: {remove_list_braces_quotes(f"{failed_created_files}")}"
     print(message)
 
+def print_failed_conversion_message(filepath: str, error: OSError):
+    print(f"An I/O error occurred: {error}")
+    print(f"Failed to convert {filepath} to {create_csv_filepath(filepath)}")
+
 def main():
     files_agv = sys.argv[1:]
     created_files = []
     failed_created_files = []
     print("Attempting... file conversion\n")
     for filepath in files_agv:
-        csv_filepath= get_csv_filepath(filepath)
+        csv_filepath= create_csv_filepath(filepath)
         file_exists = os.path.isfile(csv_filepath)
 
         if file_exists:
@@ -53,10 +57,15 @@ def main():
             try:
                 convert_pickle_to_csv(filepath)
                 created_files.append(csv_filepath)
-            except IOError as e:
-                print(f"An I/O error occurred: {e}")
-                print(f"Failed to convert {filepath} to {csv_filepath}")
-                failed_created_files.append(filepath)
+            except IOError as error:
+                print_failed_conversion_message(filepath, error)
+        elif filepath.endswith(".xls"):
+            try:
+                df = pd.read_excel(filepath, engine='xlrd')
+                df.to_csv(csv_filepath, index=False)
+            except IOError as error:
+                print_failed_conversion_message(filepath, error)
+                
     print_conversion_message(created_files, failed_created_files)
 
 if __name__ == "__main__":
